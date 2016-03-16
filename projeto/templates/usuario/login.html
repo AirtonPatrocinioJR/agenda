@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Agenda- Login{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+	<h3>Olá {{ user.username }}</h3>
+{% else %}
+<h3>Login</h3>
+	<form action="." method="post">{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" name="" value="Enviar" /></p>
+</form>
+{% endif %}
+		
+{% endblock %}

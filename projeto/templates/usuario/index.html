@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Agenda- Seus eventos{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+	<p><h2>Olá {{ user.username|title }} </h2> <div style="position: absolute;right: 0px;top: 0px;margin: 20px 30px;"><a href="/sair/">Sair</a></div></p>
+	{% include "usuario/eventos.html" %}
+	<hr>
+	<ul>
+		<h3>Lista de Eventos</h3>
+		<li><h4>Eventos de {{ user.username }}</h4></li>
+		{% if eventos %}
+			<ul>
+				{% for evento in eventos %}
+				{% if evento.user.id == user.id %}	
+					<li><p><b>Titulo:</b> {{evento.titulo}} | <b>Data:</b> {{evento.data}} <br/> {{ evento.desc}}	</p></li>
+				{% endif %}	
+				{% endfor %}
+			</ul>
+		{% else %}
+			<ul>
+				<li><p>Não tem evento cadastrado.</p></li>
+			</ul>
+		{% endif %}
+	</ul>
+{% else %}
+<h3>Login</h3>
+	<form action="." method="post">{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" name="" value="Enviar" /></p>
+</form>
+<p><a href="/cadastrar/">Cadastrar Usuário</a></p>
+{% endif %}
+		
+{% endblock %}
